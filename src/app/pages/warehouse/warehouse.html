@@ -1,0 +1,33 @@
+
+<nav>
+  <a (click)="goTo('home')">Home</a>
+  <a (click)="goTo('warehouse')">Bodegas</a>
+  <a (click)="goTo('stand')">Estanterías</a>
+  <a (click)="goTo('tools')">Herramientas</a>
+  <a (click)="goTo('tool-search')">Buscar</a>
+</nav>
+
+<div class="container">
+    <h1>Bodega</h1>
+    <div class="button-container">
+      <button (click)="addWarehouse()">Agregar bodega</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Numero</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        @for (warehouse of warehouses; track warehouse.id) {
+          <tr>
+            <td>{{ warehouse.nombre }}</td>
+            <td>{{ warehouse.numero }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>

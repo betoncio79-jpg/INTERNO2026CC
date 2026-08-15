@@ -1,0 +1,26 @@
+
+<nav>
+   <a (click)="goTo('home')">Home</a>
+   <a (click)="goTo('warehouse')">Bodegas</a>
+   <a (click)="goTo('stand')">Estanterías</a>
+   <a (click)="goTo('tools')">Herramientas</a>
+   <a (click)="goTo('tool-search')">Buscar</a>
+ </nav>
+ 
+ <div class="toolbar">
+    <button class="back-button" (click)="goBack()">‹ Regresar</button>
+  </div>
+  
+  <div id="container">
+      <div id="login">
+         <form [formGroup]="myForm">
+            <label>Nombre de la Bodega</label>
+            <input formControlName="nombre" type="text" placeholder="bodegaNombre">
+            <br>
+            <label>Numero de la Bodega</label>
+            <input formControlName="numero" type="number" placeholder="bodegaNumero">
+            <br>
+         </form>
+         <button class="save-button" (click)="guardar()">Guardar</button>
+      </div>
+   </div>

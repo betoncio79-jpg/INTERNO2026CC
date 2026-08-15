@@ -1,0 +1,63 @@
+<nav>
+  <a (click)="goTo('home')">Home</a>
+  <a (click)="goTo('warehouse')">Bodegas</a>
+  <a (click)="goTo('stand')">Estanterías</a>
+  <a (click)="goTo('tools')">Herramientas</a>
+  <a (click)="goTo('tool-search')">Buscar</a>
+</nav>
+
+<div class="home-container">
+
+    <h1 class="page-title">Panel de control</h1>
+  
+    <!-- Métricas -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-num">{{ totalWarehouses }}</span>
+        <span class="stat-label">Bodegas</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">{{ totalStands }}</span>
+        <span class="stat-label">Estanterías</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">{{ totalTools }}</span>
+        <span class="stat-label">Herramientas</span>
+      </div>
+    </div>
+  
+    <!-- Acciones rápidas -->
+    <div class="section">
+      <h2 class="section-title">Acciones rápidas</h2>
+      <div class="actions-grid">
+        <button (click)="goToAddWarehouse()" class="btn btn-primary">+ Registrar bodega</button>
+        <button (click)="goToTools()" class="btn btn-outline">+ Agregar herramienta</button>
+        <button (click)="goToTools()" class="btn btn-outline">Ver herramientas</button>
+      </div>
+    </div>
+  
+    <!-- Últimas herramientas -->
+    <div class="section">
+      <h2 class="section-title">Últimas herramientas</h2>
+      <div class="tools-table">
+        <div class="table-header">
+          <span>Nombre</span>
+          <span>Categoría</span>
+          <span>Estado</span>
+        </div>
+        <div class="table-row" *ngFor="let tool of recentTools">
+          <span class="tool-name">{{ tool.tool_name }}</span>
+          <span>{{ tool.tool_category }}</span>
+          <span class="badge"
+                [class.funcional]="tool.tool_state === 'Funcional'"
+                [class.no-funcional]="tool.tool_state !== 'Funcional'">
+            {{ tool.tool_state }}
+          </span>
+        </div>
+        <div *ngIf="recentTools.length === 0" class="empty">
+          No hay herramientas registradas aún.
+        </div>
+      </div>
+    </div>
+  
+  </div>

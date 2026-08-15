@@ -1,0 +1,35 @@
+<nav>
+    <a (click)="goTo('home')">Home</a>
+    <a (click)="goTo('warehouse')">Bodegas</a>
+    <a (click)="goTo('stand')">Estanterías</a>
+    <a (click)="goTo('tools')">Herramientas</a>
+    <a (click)="goTo('tool-search')">Buscar</a>
+  </nav>
+  
+  <div class="container">
+    <div class="back" (click)="goBack()">‹ Regresar</div>
+    <h1>Historial — {{ toolName }}</h1>
+  
+    <div *ngIf="historial.length === 0" class="empty">
+      No hay registros en el historial.
+    </div>
+  
+    <table *ngIf="historial.length > 0">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Acción</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of historial; track item.id) {
+          <tr>
+            <td>{{ formatFecha(item.fecha) }}</td>
+            <td>{{ item.accion }}</td>
+            <td>{{ item.detalle }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>

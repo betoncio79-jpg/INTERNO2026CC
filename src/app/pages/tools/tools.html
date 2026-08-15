@@ -1,0 +1,42 @@
+<nav>
+  <a (click)="goTo('home')">Home</a>
+  <a (click)="goTo('warehouse')">Bodegas</a>
+  <a (click)="goTo('stand')">Estanterías</a>
+  <a (click)="goTo('tools')">Herramientas</a>
+  <a (click)="goTo('tool-search')">Buscar</a>
+</nav>
+
+<div class="container">
+  <h1>Herramientas</h1>
+  <div class="button-container">
+    <button (click)="addTool()">Agregar herramienta</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Estado</th>
+        <th>Bodega</th>
+        <th>Estantería</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (tool of tools; track tool.id) {
+        <tr>
+          <td>{{ tool.tool_name }}</td>
+          <td>{{ tool.tool_category }}</td>
+          <td>{{ tool.tool_state }}</td>
+          <td>{{ getWarehouseName(tool.stand_id) }}</td>
+          <td>{{ getStandName(tool.stand_id) }}</td>
+          <td>
+            <button class="btn-edit" (click)="editTool(tool.id)">Editar</button>
+            <button class="btn-history" (click)="viewHistory(tool.id)">Historial</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

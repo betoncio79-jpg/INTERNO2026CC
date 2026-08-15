@@ -1,0 +1,42 @@
+<nav>
+  <a (click)="goTo('home')">Home</a>
+  <a (click)="goTo('warehouse')">Bodegas</a>
+  <a (click)="goTo('stand')">Estanterías</a>
+  <a (click)="goTo('tools')">Herramientas</a>
+  <a (click)="goTo('tool-search')">Buscar</a>
+</nav>
+
+<div class="toolbar">
+  <button class="back-button" (click)="goBack()">‹ Regresar</button>
+</div>
+
+<div id="container">
+  <div id="login">
+    <h1>Editar herramienta</h1>
+    <form [formGroup]="myForm">
+      <label>Estado</label>
+      <select formControlName="tool_state">
+        <option value="Funcional">Funcional</option>
+        <option value="No funcional">No funcional</option>
+      </select>
+      <br>
+      <label>Bodega</label>
+      <select formControlName="warehouse_id" (change)="onWarehouseChange($event)">
+        <option value="" disabled selected>Selecciona una bodega</option>
+        @for (warehouse of warehouses; track warehouse.id) {
+          <option [value]="warehouse.id">{{ warehouse.nombre }}</option>
+        }
+      </select>
+      <br>
+      <label>Estantería</label>
+      <select formControlName="stand_id">
+        <option value="" disabled selected>Selecciona una estantería</option>
+        @for (stand of Stands; track stand.id) {
+          <option [value]="stand.id">{{ stand.stand_name }}</option>
+        }
+      </select>
+      <br>
+    </form>
+    <button class="save-button" (click)="guardar()">Guardar cambios</button>
+  </div>
+</div>

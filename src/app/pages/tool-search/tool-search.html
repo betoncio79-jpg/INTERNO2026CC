@@ -1,0 +1,69 @@
+<nav>
+  <a (click)="goTo('home')">Home</a>
+  <a (click)="goTo('warehouse')">Bodegas</a>
+  <a (click)="goTo('stand')">Estanterías</a>
+  <a (click)="goTo('tools')">Herramientas</a>
+  <a (click)="goTo('tool-search')">Buscar</a>
+</nav>
+
+<div class="container">
+  <h1>Buscar herramienta</h1>
+
+  <div class="filters">
+    <input
+      [(ngModel)]="searchText"
+      (input)="search()"
+      type="text"
+      placeholder="Buscar por nombre...">
+
+    <input
+      [(ngModel)]="filterCategoria"
+      (input)="search()"
+      type="text"
+      placeholder="Filtrar por categoría...">
+
+    <select [(ngModel)]="filterEstado" (change)="search()">
+      <option value="">Todos los estados</option>
+      <option value="Funcional">Funcional</option>
+      <option value="No funcional">No funcional</option>
+    </select>
+
+    <select [(ngModel)]="filterBodega" (change)="search()">
+      <option value="">Todas las bodegas</option>
+      @for (warehouse of warehouses; track warehouse.id) {
+        <option [value]="warehouse.id">{{ warehouse.nombre }}</option>
+      }
+    </select>
+
+    <select [(ngModel)]="sortOrder" (change)="search()">
+      <option value="asc">Nombre A-Z</option>
+      <option value="desc">Nombre Z-A</option>
+    </select>
+
+    <button (click)="resetFiltros()">Limpiar filtros</button>
+  </div>
+
+  <div *ngIf="filteredTools.length === 0 && searchText" class="empty">
+    No se encontraron resultados.
+  </div>
+
+  <div class="results">
+    @for (tool of filteredTools; track tool.id) {
+      <div class="result-card">
+        <div class="result-header">
+          <span class="tool-name">{{ tool.tool_name }}</span>
+          <span class="badge"
+                [class.funcional]="tool.tool_state === 'Funcional'"
+                [class.no-funcional]="tool.tool_state !== 'Funcional'">
+            {{ tool.tool_state }}
+          </span>
+        </div>
+        <div class="result-info">
+          <span>Categoría: {{ tool.tool_category }}</span>
+          <span>Bodega: {{ getWarehouseName(tool.stand_id) }}</span>
+          <span>Estantería: {{ getStandName(tool.stand_id) }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>
