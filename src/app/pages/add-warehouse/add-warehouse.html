@@ -8,19 +8,16 @@
  </nav>
  
  <div class="toolbar">
-    <button class="back-button" (click)="goBack()">‹ Regresar</button>
-  </div>
-  
-  <div id="container">
-      <div id="login">
-         <form [formGroup]="myForm">
-            <label>Nombre de la Bodega</label>
-            <input formControlName="nombre" type="text" placeholder="bodegaNombre">
-            <br>
-            <label>Numero de la Bodega</label>
-            <input formControlName="numero" type="number" placeholder="bodegaNumero">
-            <br>
-         </form>
-         <button class="save-button" (click)="guardar()">Guardar</button>
-      </div>
+   <button class="back-button" (click)="goBack()">‹ Regresar</button>
+ </div>
+ 
+ <div id="container">
+   <div id="login">
+     <form [formGroup]="myForm">
+       <label>Nombre de la bodega</label>
+       <input formControlName="nombre" type="text" placeholder="Ej: Bodega Principal">
+       <br>
+     </form>
+     <button class="save-button" (click)="guardar()">Guardar</button>
    </div>
+ </div>

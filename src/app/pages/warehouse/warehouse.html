@@ -1,4 +1,3 @@
-
 <nav>
   <a (click)="goTo('home')">Home</a>
   <a (click)="goTo('warehouse')">Bodegas</a>
@@ -8,26 +7,27 @@
 </nav>
 
 <div class="container">
-    <h1>Bodega</h1>
-    <div class="button-container">
-      <button (click)="addWarehouse()">Agregar bodega</button>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Numero</th>
-         
-        </tr>
-      </thead>
-      <tbody>
-        @for (warehouse of warehouses; track warehouse.id) {
-          <tr>
-            <td>{{ warehouse.nombre }}</td>
-            <td>{{ warehouse.numero }}</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+  <h1>Bodegas</h1>
+  <div class="button-container">
+    <button (click)="addWarehouse()">Agregar bodega</button>
   </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Fecha de creación</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (warehouse of warehouses; track warehouse.id) {
+        <tr>
+          <td>{{ warehouse.numero }}</td>
+          <td>{{ warehouse.nombre }}</td>
+          <td>{{ warehouse.fecha_creacion ? (warehouse.fecha_creacion | date:'dd/MM/yyyy') : 'Sin fecha' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

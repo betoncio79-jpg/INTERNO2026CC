@@ -36,11 +36,17 @@ export class AddStand implements OnInit {
 
   async guardar() {
     if (this.myForm.valid) {
+      const stands = await this.firestoreService.getAll('stands');
+      const numero = stands.length + 1;
+  
       const currentUserId = localStorage.getItem('currentUserId');
       await this.firestoreService.add('stands', {
         ...this.myForm.value,
+        numero: numero,
+        fecha_creacion: new Date().toISOString(),
         createdBy: currentUserId
       });
+  
       alert('Estantería agregada correctamente');
       this.myForm.reset();
     } else {

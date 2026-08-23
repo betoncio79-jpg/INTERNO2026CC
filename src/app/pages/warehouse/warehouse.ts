@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-warehouse',
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './warehouse.html',
   styleUrl: './warehouse.css',
 })

@@ -1,44 +1,50 @@
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-add-warehouse',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-warehouse.html',
   styleUrl: './add-warehouse.css',
 })
-export class AddWarehouse {
+export class AddWarehouse implements OnInit {
   myForm: FormGroup;
 
-  // Inyectamos el servicio
   private firestoreService = inject(FirestoreService);
 
   constructor(private formBuilder: FormBuilder, private router: Router) {
     this.myForm = this.formBuilder.group({
       nombre: ['', [Validators.required]],
-      numero: ['', [Validators.required]],
     });
   }
+
+  async ngOnInit() {}
 
   goBack() {
     this.router.navigate(['/warehouse']);
   }
 
-  async guardar(){
+  async guardar() {
     if (this.myForm.valid) {
-      const currentUserId = localStorage.getItem('currentUserId');
+      const warehouses = await this.firestoreService.getAll('warehouse');
+      const numero = warehouses.length + 1;
+
       await this.firestoreService.add('warehouse', {
         ...this.myForm.value,
-        createdBy: currentUserId
+        numero: numero,
+        fecha_creacion: new Date().toISOString()
       });
-      alert('Producto agregado correctamente')
+
+      alert('Bodega agregada correctamente');
       this.myForm.reset();
-    }else{
-      alert('Formulario vacio')
+    } else {
+      alert('Formulario vacío');
     }
   }
+
   goTo(path: string) {
     this.router.navigate([path]);
   }

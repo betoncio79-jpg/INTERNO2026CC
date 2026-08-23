@@ -66,4 +66,8 @@ export class Home implements OnInit {
   goTo(path: string) {
     this.router.navigate([path]);
   }
+
+  cerrarSesion() {
+    this.router.navigate(['/login']);
+  }
 }

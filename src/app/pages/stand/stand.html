@@ -1,4 +1,3 @@
-
 <nav>
   <a (click)="goTo('home')">Home</a>
   <a (click)="goTo('warehouse')">Bodegas</a>
@@ -16,15 +15,19 @@
   <table>
     <thead>
       <tr>
+        <th>#</th>
         <th>Nombre</th>
         <th>Bodega</th>
+        <th>Fecha de creación</th>
       </tr>
     </thead>
     <tbody>
       @for (stand of stands; track stand.id) {
         <tr>
+          <td>{{ stand.numero }}</td>
           <td>{{ stand.stand_name }}</td>
           <td>{{ getWarehouseName(stand.warehouse_id) }}</td>
+          <td>{{ stand.fecha_creacion ? (stand.fecha_creacion | date:'dd/MM/yyyy') : 'Sin fecha' }}</td>
         </tr>
       }
     </tbody>

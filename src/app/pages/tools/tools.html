@@ -15,22 +15,26 @@
   <table>
     <thead>
       <tr>
+        <th>#</th>
         <th>Nombre</th>
         <th>Categoría</th>
         <th>Estado</th>
         <th>Bodega</th>
         <th>Estantería</th>
+        <th>Fecha de creación</th>
         <th>Acción</th>
       </tr>
     </thead>
     <tbody>
       @for (tool of tools; track tool.id) {
         <tr>
+          <td>{{ tool.numero }}</td>
           <td>{{ tool.tool_name }}</td>
           <td>{{ tool.tool_category }}</td>
           <td>{{ tool.tool_state }}</td>
           <td>{{ getWarehouseName(tool.stand_id) }}</td>
           <td>{{ getStandName(tool.stand_id) }}</td>
+          <td>{{ tool.fecha_creacion ? (tool.fecha_creacion | date:'dd/MM/yyyy') : 'Sin fecha' }}</td>
           <td>
             <button class="btn-edit" (click)="editTool(tool.id)">Editar</button>
             <button class="btn-history" (click)="viewHistory(tool.id)">Historial</button>

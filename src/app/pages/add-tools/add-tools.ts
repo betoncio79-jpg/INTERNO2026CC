@@ -48,14 +48,17 @@ export class AddTools implements OnInit {
 
   async guardar() {
     if (this.myForm.valid) {
-      // Guarda la herramienta
-      const docRef = await this.firestoreService.add('tools', this.myForm.value);
+      const tools = await this.firestoreService.getAll('tools');
+      const numero = tools.length + 1;
   
-      // Obtiene el nombre de la estantería y bodega seleccionadas
+      const docRef = await this.firestoreService.add('tools', {
+        ...this.myForm.value,
+        numero: numero,
+        fecha_creacion: new Date().toISOString()
+      });
+  
       const stand = this.allStands.find(s => s.id === this.myForm.value.stand_id);
       const warehouse = this.warehouses.find(w => w.id === this.myForm.value.warehouse_id);
-  
-      // Registra en el historial
       await this.firestoreService.add('historial', {
         tool_id: docRef.id,
         tool_name: this.myForm.value.tool_name,
@@ -71,6 +74,7 @@ export class AddTools implements OnInit {
       alert('Formulario vacío');
     }
   }
+
   goTo(path: string) {
     this.router.navigate([path]);
   }

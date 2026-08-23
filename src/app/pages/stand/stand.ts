@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stand',
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './stand.html',
   styleUrl: './stand.css',
 })
@@ -17,7 +17,6 @@ export class Stand implements OnInit {
   stands: any[] = [];
   warehouses: any[] = [];
 
-// Carga todas las estanterías y bodegas al iniciar el componente
   async ngOnInit() {
     this.stands = await this.firestoreService.getAll('stands');
     this.warehouses = await this.firestoreService.getAll('warehouse');
@@ -28,7 +27,6 @@ export class Stand implements OnInit {
     this.router.navigate(['/add-stand']); // Navega a la pantalla de agregar estantería
   }
 
-// Metodo recibir ID de la bodega y devuelve su nombre de la base da datos
   getWarehouseName(warehouse_id: string): string {
     const warehouse = this.warehouses.find(w => w.id === warehouse_id);
     return warehouse ? warehouse.nombre : 'Sin bodega';
