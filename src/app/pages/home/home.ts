@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../../services/firestore.service';
+import { Auth, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +13,9 @@ import { FirestoreService } from '../../services/firestore.service';
 })
 export class Home implements OnInit {
 
-  // Servicio para comunicarse con Firestore
   private firestoreService = inject(FirestoreService);
-
-  // Servicio para navegar entre pantallas
   private router = inject(Router);
-
-  // Fuerza a Angular a actualizar la vista después de cargar datos
+  private auth = inject(Auth);
   private cdr = inject(ChangeDetectorRef);
 
   // Variables que almacenan los totales para mostrar en el panel
@@ -67,7 +64,8 @@ export class Home implements OnInit {
     this.router.navigate([path]);
   }
 
-  cerrarSesion() {
+  async cerrarSesion() {
+    await signOut(this.auth);
     this.router.navigate(['/login']);
   }
 }

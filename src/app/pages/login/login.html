@@ -1,20 +1,13 @@
-
-
 <div class="login-wrapper">
     <div class="login-card">
       <h2>Iniciar sesión</h2>
       <p class="subtitle">Solo personal autorizado</p>
-  
-      <form (ngSubmit)="login()">
-        <label for="email">CORREO</label>
-        <input type="email" id="email" [(ngModel)]="email" name="email" required>
-  
-        <label for="fullname">NOMBRE</label>
-        <input type="text" id="fullname" [(ngModel)]="fullname" name="fullname" required>
-  
-        <button type="submit">Entrar</button>
-  
-        <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+      <form [formGroup]="myForm">
+        <label>Correo electrónico</label>
+        <input formControlName="email" type="email" placeholder="correo@ejemplo.com">
+        <label>Contraseña</label>
+        <input formControlName="password" type="password" placeholder="••••••••">
       </form>
+      <button (click)="login()">Entrar</button>
     </div>
   </div>

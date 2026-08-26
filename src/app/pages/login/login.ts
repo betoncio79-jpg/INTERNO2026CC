@@ -1,40 +1,40 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  styleUrl: './login.css',
 })
 export class Login {
-  email = '';
-  fullname = '';
-  errorMsg = '';
 
-  constructor(private firestore: Firestore, private router: Router) {}
+  myForm: FormGroup;
+  private auth = inject(Auth);
+
+  constructor(private formBuilder: FormBuilder, private router: Router) {
+    this.myForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
+  }
 
   async login() {
-    const usersRef = collection(this.firestore, 'user');
-    const q = query(
-      usersRef,
-      where('email', '==', this.email),
-      where('fullname', '==', this.fullname)
-    );
-    const result = await getDocs(q);
-
-    if (result.empty) {
-      this.errorMsg = 'Correo o nombre incorrectos';
-      return;
+    if (this.myForm.valid) {
+      try {
+        await signInWithEmailAndPassword(
+          this.auth,
+          this.myForm.value.email,
+          this.myForm.value.password
+        );
+        this.router.navigate(['/home']);
+      } catch (error) {
+        alert('Usuario o contraseña incorrectos');
+      }
+    } else {
+      alert('Completa todos los campos');
     }
-
-    const userDoc = result.docs[0];
-    localStorage.setItem('currentUserId', userDoc.id);
-    localStorage.setItem('currentUserName', userDoc.data()['fullname']);
-    this.router.navigate(['/home']);
   }
 }
