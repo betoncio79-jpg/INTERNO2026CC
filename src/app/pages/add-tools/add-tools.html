@@ -27,21 +27,21 @@
       <br>
       <label>Bodega</label>
       <select formControlName="warehouse_id" (change)="onWarehouseChange($event)">
-        <option value="" disable selected  >Selecciona una bodega</option>
+        <option value="" disabled selected>Selecciona una bodega</option>
         @for (warehouse of warehouses; track warehouse.id) {
-          <option [value]="warehouse.id">{{ warehouse.nombre }}</option>
+          <option [value]="warehouse.id">Bodega_0{{ warehouse.numero }} — {{ warehouse.nombre }}</option>
         }
       </select>
       <br>
       <label>Estantería</label>
       <select formControlName="stand_id">
-        <option value="" disable selected>Selecciona una estantería</option>
+        <option value="" disabled selected>Selecciona una estantería</option>
         @for (stand of Stands; track stand.id) {
-          <option [value]="stand.id">{{ stand.stand_name }}</option>
+          <option [value]="stand.id">Stand_0{{ stand.numero }} — {{ stand.stand_name }}</option>
         }
       </select>
       <br>
     </form>
     <button class="save-button" (click)="guardar()">Guardar</button>
   </div>
-</div>  
+</div>

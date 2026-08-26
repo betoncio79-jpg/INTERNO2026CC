@@ -35,4 +35,13 @@ export class Stand implements OnInit {
   goTo(path: string) {
     this.router.navigate([path]);
   }
+
+  async deleteStand(id: string) {
+    const confirmar = confirm('¿Estás seguro de eliminar esta estantería?');
+    if (confirmar) {
+      await this.firestoreService.delete('stands', id);
+      this.stands = this.stands.filter(s => s.id !== id);
+      this.cdr.detectChanges();
+    }
+  }
 }

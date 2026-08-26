@@ -18,16 +18,17 @@
         <th>#</th>
         <th>Nombre</th>
         <th>Fecha de creación</th>
+        <th>Acción</th>
       </tr>
     </thead>
     <tbody>
       @for (warehouse of warehouses; track warehouse.id) {
         <tr>
           <td>{{ warehouse.numero }}</td>
-          <td>{{ warehouse.nombre }}</td>
+          <td>Bodega_0{{ warehouse.numero }} — {{ warehouse.nombre }}</td>
           <td>{{ warehouse.fecha_creacion ? (warehouse.fecha_creacion | date:'dd/MM/yyyy') : 'Sin fecha' }}</td>
+          <td><button class="btn-delete" (click)="deleteWarehouse(warehouse.id)">Eliminar</button></td>
         </tr>
       }
     </tbody>
   </table>
-</div>

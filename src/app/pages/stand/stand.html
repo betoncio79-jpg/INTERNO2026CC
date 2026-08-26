@@ -19,6 +19,7 @@
         <th>Nombre</th>
         <th>Bodega</th>
         <th>Fecha de creación</th>
+        <th>Acción</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +29,9 @@
           <td>{{ stand.stand_name }}</td>
           <td>{{ getWarehouseName(stand.warehouse_id) }}</td>
           <td>{{ stand.fecha_creacion ? (stand.fecha_creacion | date:'dd/MM/yyyy') : 'Sin fecha' }}</td>
+          <td>
+            <button class="btn-delete" (click)="deleteStand(stand.id)">Eliminar</button>
+          </td>
         </tr>
       }
     </tbody>

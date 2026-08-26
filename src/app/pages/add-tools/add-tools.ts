@@ -29,16 +29,13 @@ export class AddTools implements OnInit {
   }
 
   async ngOnInit() {
-    // Carga bodegas y estanterías desde Firestore
     this.warehouses = await this.firestoreService.getAll('warehouse');
     this.allStands = await this.firestoreService.getAll('stands');
   }
 
-  // Cuando el usuario selecciona una bodega, filtra sus estanterías
   onWarehouseChange(event: any) {
     const warehouseId = event.target.value;
     this.Stands = this.allStands.filter(s => s.warehouse_id === warehouseId);
-    // Resetea la estantería seleccionada
     this.myForm.patchValue({ stand_id: '' });
   }
 

@@ -29,4 +29,13 @@ export class Warehouse implements OnInit{
   goTo(path: string) {
     this.router.navigate([path]);
   }
+
+  async deleteWarehouse(id: string) {
+    const confirmar = confirm('¿Estás seguro de eliminar esta bodega?');
+    if (confirmar) {
+      await this.firestoreService.delete('warehouse', id);
+      this.warehouses = this.warehouses.filter(w => w.id !== id);
+      this.cdr.detectChanges();
+    }
+  }
 }

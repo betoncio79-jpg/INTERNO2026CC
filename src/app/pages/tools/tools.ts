@@ -35,14 +35,14 @@ export class Tools implements OnInit {
 
   getStandName(stand_id: string): string {
     const stand = this.stands.find(s => s.id === stand_id);
-    return stand ? stand.stand_name : 'Sin estantería';
+    return stand ? `Stand_0${stand.numero} — ${stand.stand_name}` : 'Sin estantería';
   }
-
+  
   getWarehouseName(stand_id: string): string {
     const stand = this.stands.find(s => s.id === stand_id);
     if (!stand) return 'Sin bodega';
     const warehouse = this.warehouses.find(w => w.id === stand.warehouse_id);
-    return warehouse ? warehouse.nombre : 'Sin bodega';
+    return warehouse ? `Bodega_0${warehouse.numero} — ${warehouse.nombre}` : 'Sin bodega';
   }
 
   goTo(path: string) {
@@ -51,5 +51,14 @@ export class Tools implements OnInit {
 
   viewHistory(id: string) {
     this.router.navigate(['/tool-history', id]);
+  }
+
+  async deleteTool(id: string) {
+    const confirmar = confirm('¿Estás seguro de eliminar esta herramienta?');
+    if (confirmar) {
+      await this.firestoreService.delete('tools', id);
+      this.tools = this.tools.filter(t => t.id !== id);
+      this.cdr.detectChanges();
+    }
   }
 }
