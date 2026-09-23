@@ -58,6 +58,11 @@ export class ToolSearch implements OnInit {
         ? nameA.localeCompare(nameB)
         : nameB.localeCompare(nameA);
     });
+    
+    console.log('buscando...', this.searchText);
+  console.log('allTools:', this.allTools.length);
+  console.log('stands:', this.stands.length);
+  console.log('warehouses:', this.warehouses.length);
 
     this.cdr.detectChanges();
   }
@@ -74,15 +79,22 @@ export class ToolSearch implements OnInit {
   }
 
   getStandName(stand_id: string): string {
+    console.log('stand_id:', stand_id);
+    console.log('stands:', this.stands);
     const stand = this.stands.find(s => s.id === stand_id);
-    return stand ? stand.stand_name : 'Sin estantería';
+    console.log('stand encontrado:', stand);
+    if (!stand) return 'Sin estantería';
+    const numero = stand.numero ? `Stand_0${stand.numero} — ` : '';
+    return `${numero}${stand.stand_name}`;
   }
-
+  
   getWarehouseName(stand_id: string): string {
     const stand = this.stands.find(s => s.id === stand_id);
     if (!stand) return 'Sin bodega';
     const warehouse = this.warehouses.find(w => w.id === stand.warehouse_id);
-    return warehouse ? warehouse.nombre : 'Sin bodega';
+    if (!warehouse) return 'Sin bodega';
+    const numero = warehouse.numero ? `Bodega_0${warehouse.numero} — ` : '';
+    return `${numero}${warehouse.nombre}`;
   }
 
   goTo(path: string) {
